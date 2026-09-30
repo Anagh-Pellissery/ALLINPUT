@@ -490,6 +490,15 @@
             color: var(--red)
         }
 
+        .reg-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: left
+        }
+
         @media (max-width:860px) {
 
             .hero .wrap,
@@ -518,7 +527,14 @@
             }
 
             .navbtn {
-                display: none
+                padding: 0 10px !important;
+                font-size: .8rem !important;
+                gap: 5px !important;
+                border-left: none !important
+            }
+
+            .navbtn img {
+                height: 20px !important
             }
 
             .links {
@@ -544,6 +560,46 @@
 
             section {
                 padding: 56px 0
+            }
+
+            .reg-grid {
+                grid-template-columns: 1fr
+            }
+
+            .hero {
+                padding: 36px 0 24px
+            }
+
+            .stage {
+                max-width: 320px
+            }
+        }
+
+        @media (max-width:600px) {
+            .stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .stats b {
+                font-size: 1.5rem
+            }
+
+            .cta {
+                flex-direction: column
+            }
+
+            .cta .btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center
+            }
+
+            h1 {
+                font-size: 2.2rem
+            }
+
+            h2 {
+                font-size: 1.6rem
             }
         }
     </style>
@@ -723,7 +779,7 @@
             <h2><span>₹249</span> per team</h2>
             <p style="max-width:520px;margin:0 auto 36px;color:var(--mut)">Registration fee per team. Choose your
                 registration path below.</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:680px;margin:0 auto;text-align:left">
+            <div class="reg-grid">
                 <div class="card" style="border-color:rgba(255,255,255,.15);border-left:3px solid var(--red)">
                     <div class="tag mono" style="margin-bottom:10px">External</div>
                     <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--ink)">Other Colleges</h3>
