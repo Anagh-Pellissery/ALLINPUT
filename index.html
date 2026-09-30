@@ -1,165 +1,775 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>All-in Put — Bid. Build. Win.</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#edebd8;--ink:#0d0d0d;--red:#d0472a;--mut:#55534a;--line:#0d0d0d;--card:#f5f3e4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-:root:not([data-theme="light"]){}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141412;--ink:#edebd8;--mut:#a7a496;--line:#edebd8;--card:#1c1c19}}
-:root[data-theme="dark"]{--bg:#141412;--ink:#edebd8;--mut:#a7a496;--line:#edebd8;--card:#1c1c19}
-*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.55;overflow-x:hidden}
-img{max-width:100%;display:block}a{color:inherit}
-.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
-.wrap{max-width:1180px;margin:auto;padding:0 20px}
-nav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:stretch;height:64px}
-.brand{display:flex;align-items:center;font-weight:700;font-size:1.15rem;padding-right:20px;text-decoration:none;gap:8px}
-.brand i{width:14px;height:14px;border-radius:50%;background:var(--red)}
-.links{display:flex;flex:1}
-.links a{display:flex;align-items:center;padding:0 18px;border-left:1px solid var(--line);text-decoration:none;font-size:.88rem}
-.links a:hover{color:var(--red)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:500;border:1px solid var(--ink);transition:.2s}
-.btn:hover{background:var(--red);border-color:var(--red);color:#fff}
-.btn.o{background:transparent;color:var(--ink)}.btn.o:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.navbtn{align-self:center;padding:9px 18px;font-size:.85rem;margin-left:auto}
-.burger{display:none;margin-left:auto;align-self:center;background:none;border:1px solid var(--line);color:var(--ink);padding:8px 12px;font:inherit}
-.hero{padding:56px 0 40px}
-.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:32px;align-items:center}
-.tag{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:700}
-h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:.98;letter-spacing:-.03em;margin:14px 0 18px}
-h1 em{font-style:normal;color:var(--red)}
-.hero p.lead{max-width:460px;color:var(--mut);font-size:1.08rem}
-.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.logo{width:min(100%,460px);margin-bottom:18px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo,:root:not([data-theme="light"]) .car{filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}}
-.stage{position:relative;aspect-ratio:1/1;max-width:520px;margin:auto;width:100%}
-.stage:before{content:"";position:absolute;width:70%;aspect-ratio:1;border-radius:50%;background:var(--red);top:15%;left:15%}
-.car{position:absolute;inset:auto 0 6% 0;width:100%}
-.lot{position:absolute;right:0;top:4%;background:var(--ink);color:var(--bg);padding:8px 12px;font-size:.75rem;transform:rotate(4deg)}
-.ticker{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;background:var(--ink);color:var(--bg)}
-.ticker div{display:inline-block;padding:12px 0;animation:m 28s linear infinite;font-size:.85rem}
-.ticker span{margin:0 26px}.ticker b{color:var(--red)}
-@keyframes m{to{transform:translateX(-50%)}}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
-.stats div{padding:26px 20px;border-left:1px solid var(--line)}.stats div:first-child{border-left:0}
-.stats b{display:block;font-size:2rem;letter-spacing:-.02em}.stats span{color:var(--mut);font-size:.85rem}
-section{padding:80px 0;border-bottom:1px solid var(--line)}
-h2{font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-.025em;line-height:1.05;margin:10px 0 28px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.card{background:var(--card);border:1px solid var(--line);padding:26px}
-.card h3{margin-bottom:8px}.card p,.card li{color:var(--mut)}
-.win{background:var(--red);color:#fff;border-color:var(--red)}.win h3,.win p{color:#fff}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line)}
-.step{padding:24px;border:1px solid var(--line);margin:-.5px;background:var(--card)}
-.step small{color:var(--red);font-weight:700;font-size:.75rem}.step p{margin-top:8px}
-.step:hover{background:var(--ink);color:var(--bg)}
-.time{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
-.time div{border-top:4px solid var(--red);padding-top:12px}.time b{font-size:1.7rem;display:block}
-ul{padding-left:18px}li{margin:6px 0}
-.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line)}
-.rule{display:flex;gap:16px;padding:20px;border:1px solid var(--line);margin:-.5px}
-.rule b{color:var(--red);font-size:1.1rem}
-.reg{background:var(--ink);color:var(--bg);text-align:center}
-.reg h2 span{color:var(--red)}
-.reg .btn{background:var(--red);border-color:var(--red);color:#fff}.reg .btn:hover{background:var(--bg);color:var(--ink)}
-.contacts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.contacts a.tel{font-size:1.15rem;text-decoration:none;color:var(--red);font-weight:700}
-footer{padding:28px 0;color:var(--mut);font-size:.88rem}footer a{color:var(--red)}
-@media (max-width:860px){
-.hero .wrap,.grid2,.steps,.rules,.contacts,.time{grid-template-columns:1fr}
-.stats{grid-template-columns:1fr 1fr}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--line)}
-.burger{display:block}.navbtn{display:none}
-.links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--line)}
-.links.open{display:flex}.links a{border-left:0;border-top:1px solid var(--line);padding:16px 20px}
-section{padding:56px 0}}
-</style></head><body>
-<nav><div class="wrap">
-<a class="brand" href="#top"><i></i>All-in Put</a>
-<button class="burger" aria-label="Menu" onclick="document.getElementById('l').classList.toggle('open')">Menu</button>
-<div class="links" id="l" onclick="this.classList.remove('open')">
-<a href="#about">About</a><a href="#format">Format</a><a href="#eligibility">Eligibility</a><a href="#rules">Rules</a><a href="#register">Register</a><a href="#contact">Contact</a></div>
-<a class="btn navbtn" href="https://unstop.com/p/all-in-put-indian-institute-of-information-technology-iiit-kottayam-1763553">Register</a>
-</div></nav>
+<html lang="en">
 
-<header class="hero" id="top"><div class="wrap">
-<div>
-<img class="logo" src="logo-removebg-preview.png" alt="All-in Put logo">
-<div class="tag mono">Team-based electronics &amp; innovation event</div>
-<h1>Bid. Build. <em>Win.</em></h1>
-<p class="lead">Bid for components with virtual credits. Build a working project with only what you win.</p>
-<div class="cta"><a class="btn" href="https://unstop.com/p/all-in-put-indian-institute-of-information-technology-iiit-kottayam-1763553">Register your team →</a><a class="btn o" href="#format">How it works</a></div>
-</div>
-<div class="stage"><div class="lot mono">LOT #01 · SOLD?</div><img class="car" src="car-removebg-preview.png" alt="Elix robot car"></div>
-</div></header>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>All-in Put — Bid. Build. Win.</title>
+    <link rel="icon" type="image/png" href="aaroh_logo.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #edebd8;
+            --ink: #0d0d0d;
+            --red: #d0472a;
+            --mut: #55534a;
+            --line: #0d0d0d;
+            --card: #f5f3e4;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
 
-<div class="ticker" aria-hidden="true"><div class="mono">
-<span><b>●</b> GOING ONCE</span><span>GOING TWICE</span><span><b>SOLD!</b></span><span>SPEND WISELY</span><span>EVERY CREDIT COUNTS</span><span><b>●</b> GOING ONCE</span><span>GOING TWICE</span><span><b>SOLD!</b></span><span>SPEND WISELY</span><span>EVERY CREDIT COUNTS</span>
-<span><b>●</b> GOING ONCE</span><span>GOING TWICE</span><span><b>SOLD!</b></span><span>SPEND WISELY</span><span>EVERY CREDIT COUNTS</span><span><b>●</b> GOING ONCE</span><span>GOING TWICE</span><span><b>SOLD!</b></span><span>SPEND WISELY</span><span>EVERY CREDIT COUNTS</span></div></div>
+        :root:not([data-theme="light"]) {}
 
-<div class="wrap"><div class="stats">
-<div><b>₹250</b><span>per team</span></div><div><b>3 – 5</b><span>members per team</span></div><div><b>~4.5–5 hrs</b><span>total duration</span></div><div><b>Top 3</b><span>keep what they build</span></div></div></div>
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #141412;
+                --ink: #edebd8;
+                --mut: #a7a496;
+                --line: #edebd8;
+                --card: #1c1c19
+            }
+        }
 
-<section id="about"><div class="wrap">
-<div class="tag mono">// 01 Overview</div><h2>Bid smart. Build clever.</h2>
-<div class="grid2">
-<div class="card"><p>A team-based electronics and innovation event where participants bid for components using virtual credits and then build their own creative working project using the resources they acquire.</p>
-<h3 style="margin-top:20px">Objective</h3><p>To encourage participants to think creatively, make strategic engineering decisions and develop a functional project under limited resources, budget and time constraints.</p></div>
-<div class="card win"><h3 style="font-size:1.8rem;line-height:1.15">Top 3 teams get to keep what they build!!!</h3></div>
-</div></div></section>
+        :root[data-theme="dark"] {
+            --bg: #141412;
+            --ink: #edebd8;
+            --mut: #a7a496;
+            --line: #edebd8;
+            --card: #1c1c19
+        }
 
-<section id="format"><div class="wrap">
-<div class="tag mono">// 02 Format</div><h2>Spend wisely. Every credit counts.</h2>
-<div class="steps">
-<div class="step"><small class="mono">STEP 01</small><p>Each team receives a fixed amount of virtual credits.</p></div>
-<div class="step"><small class="mono">STEP 02</small><p>Common/basic components are bought using these credits.</p></div>
-<div class="step"><small class="mono">STEP 03</small><p>Special/limited components are auctioned and can be bought using the credits left after buying the basic components.</p></div>
-<div class="step"><small class="mono">STEP 04</small><p>Teams must strategically bid and manage their budget.</p></div>
-<div class="step"><small class="mono">STEP 05</small><p>After the auction, teams can build any project they want using only the components/resources they acquired.</p></div>
-<div class="step"><small class="mono">STEP 06</small><p>Teams design, assemble, program and demonstrate their project.</p></div>
-<div class="step" style="grid-column:1/-1"><small class="mono">STEP 07</small><p>Projects are evaluated on functionality, creativity, technical implementation and efficient use of resources.</p></div>
-</div>
-<div class="tag mono" style="margin-top:56px">// schedule</div><h2 style="margin-bottom:0">Timeline</h2>
-<div class="time"><div><b>1.5 – 2 hrs</b>Auction</div><div><b>2.5 hrs</b>Build &amp; Design</div><div><b>30 min</b>Final Demonstration &amp; Evaluation</div></div>
-</div></section>
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
 
-<section id="eligibility"><div class="wrap">
-<div class="tag mono">// 03 Eligibility</div><h2>Who can join</h2>
-<div class="grid2">
-<div class="card"><h3>Who can join</h3><ul><li>Undergraduate students from any branch/specialization</li><li>Inter-college teams allowed</li><li>Inter-specialization teams allowed</li></ul></div>
-<div class="card"><h3>Team rules</h3><ul><li>Team size: 3 – 5 members</li><li>A participant can be part of only one team</li></ul></div>
-</div></div></section>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 72px
+        }
 
-<section id="rules"><div class="wrap">
-<div class="tag mono">// 04 Rules</div><h2>Play fair, build smart.</h2>
-<div class="rules">
-<div class="rule"><b class="mono">01</b>Each team will receive the same initial amount of virtual credits.</div>
-<div class="rule"><b class="mono">02</b>Teams must use only the components/resources they have acquired through the permitted event mechanisms.</div>
-<div class="rule"><b class="mono">03</b>Teams may not secretly obtain components from other teams or external sources.</div>
-<div class="rule"><b class="mono">04</b>Any resource trade must be approved by the event coordinators.</div>
-<div class="rule"><b class="mono">05</b>Components cannot be exchanged after the trading period closes.</div>
-<div class="rule"><b class="mono">06</b>Teams must not interfere with another team's circuit, code, components, or workspace.</div>
-<div class="rule"><b class="mono">07</b>Any attempt to gain an unfair advantage through unauthorized hardware, software, communication, or external assistance may result in disqualification.</div>
-<div class="rule"><b class="mono">08</b>Only low-voltage components supplied/approved by the organizers may be used.</div>
-<div class="rule"><b class="mono">09</b>Teams are responsible for handling the components assigned to them.</div>
-<div class="rule"><b class="mono">10</b>The organizers' decision regarding rule violations and scoring will be final.</div>
-</div></div></section>
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            line-height: 1.55;
+            overflow-x: hidden
+        }
 
-<section id="register" class="reg"><div class="wrap">
-<div class="tag mono">// 05 Register</div><h2><span>₹250</span> per team</h2>
-<p style="max-width:480px;margin:0 auto 28px;color:var(--mut)">Registration fee per team. Complete registration and payment on Unstop via the link below.</p>
-<a class="btn" href="https://unstop.com/p/all-in-put-indian-institute-of-information-technology-iiit-kottayam-1763553">Register &amp; pay now →</a>
-</div></section>
+        img {
+            max-width: 100%;
+            display: block
+        }
 
-<section id="contact"><div class="wrap">
-<div class="tag mono">// 06 Points of Contact</div><h2>Questions? Reach out.</h2>
-<p style="margin:-12px 0 24px;color:var(--mut)">Questions about registration, teams or the event? Reach out to us.</p>
-<div class="contacts">
-<div class="card"><h3>Nandana S</h3><a class="tel" href="tel:+919048969850">90489 69850</a></div>
-<div class="card"><h3>Ann Mary</h3><a class="tel" href="tel:+918137022109">81370 22109</a></div>
-<div class="card"><h3>Zayed</h3><a class="tel" href="tel:+918089760100">80897 60100</a></div>
-</div></div></section>
+        a {
+            color: inherit
+        }
 
-<footer><div class="wrap">All-in Put · Part of the tech fest · <a href="https://aaroh.iiitkottayam.ac.in/">AAROH, IIIT Kottayam</a></div></footer>
-</body></html>
+        .mono {
+            font-family: 'JetBrains Mono', ui-monospace, monospace
+        }
+
+        .wrap {
+            max-width: 1180px;
+            margin: auto;
+            padding: 0 20px
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line)
+        }
+
+        nav .wrap {
+            display: flex;
+            align-items: stretch;
+            height: 64px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.15rem;
+            padding-right: 20px;
+            text-decoration: none;
+            gap: 8px
+        }
+
+        .brand i {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--red)
+        }
+
+        .links {
+            display: flex;
+            flex: 1
+        }
+
+        .links a {
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            border-left: 1px solid var(--line);
+            text-decoration: none;
+            font-size: .88rem
+        }
+
+        .links a:hover {
+            color: var(--red)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 26px;
+            background: var(--ink);
+            color: var(--bg);
+            text-decoration: none;
+            font-weight: 500;
+            border: 1px solid var(--ink);
+            transition: .2s
+        }
+
+        .btn:hover {
+            background: var(--red);
+            border-color: var(--red);
+            color: #fff
+        }
+
+        .btn.o {
+            background: transparent;
+            color: var(--ink)
+        }
+
+        .btn.o:hover {
+            background: var(--ink);
+            color: var(--bg);
+            border-color: var(--ink)
+        }
+
+        .navbtn {
+            align-self: center;
+            padding: 9px 18px;
+            font-size: .85rem;
+            margin-left: auto
+        }
+
+        .burger {
+            display: none;
+            margin-left: auto;
+            align-self: center;
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--ink);
+            padding: 8px 12px;
+            font: inherit
+        }
+
+        .hero {
+            padding: 56px 0 40px
+        }
+
+        .hero .wrap {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 32px;
+            align-items: center
+        }
+
+        .tag {
+            font-size: .75rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--red);
+            font-weight: 700
+        }
+
+        h1 {
+            font-size: clamp(2.6rem, 7vw, 5.2rem);
+            line-height: .98;
+            letter-spacing: -.03em;
+            margin: 14px 0 18px
+        }
+
+        h1 em {
+            font-style: normal;
+            color: var(--red)
+        }
+
+        .hero p.lead {
+            max-width: 460px;
+            color: var(--mut);
+            font-size: 1.08rem
+        }
+
+        .cta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px
+        }
+
+        .logo {
+            width: min(100%, 460px);
+            margin-bottom: 18px;
+        }
+
+        @media (prefers-color-scheme:dark) {
+
+            :root:not([data-theme="light"]) .logo,
+            :root:not([data-theme="light"]) .car {
+                filter: invert(1) hue-rotate(180deg);
+            }
+        }
+
+        .stage {
+            position: relative;
+            aspect-ratio: 1/1;
+            max-width: 520px;
+            margin: auto;
+            width: 100%;
+            overflow: hidden
+        }
+
+        .stage:before {
+            content: "";
+            position: absolute;
+            width: 90%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: var(--red);
+            bottom: -18%;
+            left: 50%;
+            transform: translateX(-50%)
+        }
+
+        .car {
+            position: absolute;
+            inset: auto 0 -22% 0;
+            width: 100%;
+        }
+
+        .lot {
+            position: absolute;
+            right: 0;
+            top: 4%;
+            background: var(--ink);
+            color: var(--bg);
+            padding: 8px 12px;
+            font-size: .75rem;
+            transform: rotate(4deg)
+        }
+
+        .ticker {
+            border-block: 1px solid var(--line);
+            overflow: hidden;
+            white-space: nowrap;
+            background: var(--ink);
+            color: var(--bg)
+        }
+
+        .ticker div {
+            display: inline-block;
+            padding: 12px 0;
+            animation: m 28s linear infinite;
+            font-size: .85rem
+        }
+        
+
+        .ticker span {
+            margin: 0 26px
+        }
+
+        .ticker b {
+            color: var(--red)
+        }
+
+        @keyframes m {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .stats div {
+            padding: 26px 20px;
+            border-left: 1px solid var(--line)
+        }
+
+        .stats div:first-child {
+            border-left: 0
+        }
+
+        .stats b {
+            display: block;
+            font-size: 2rem;
+            letter-spacing: -.02em
+        }
+
+        .stats span {
+            color: var(--mut);
+            font-size: .85rem
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4.5vw, 3.2rem);
+            letter-spacing: -.025em;
+            line-height: 1.05;
+            margin: 10px 0 28px
+        }
+
+        .grid2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            padding: 26px
+        }
+
+        .card h3 {
+            margin-bottom: 8px
+        }
+
+        .card p,
+        .card li {
+            color: var(--mut)
+        }
+
+        .win {
+            background: var(--red);
+            color: #fff;
+            border-color: var(--red)
+        }
+
+        .win h3,
+        .win p {
+            color: #fff
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid var(--line)
+        }
+
+        .step {
+            padding: 24px;
+            border: 1px solid var(--line);
+            margin: -.5px;
+            background: var(--card)
+        }
+
+        .step small {
+            color: var(--red);
+            font-weight: 700;
+            font-size: .75rem
+        }
+
+        .step p {
+            margin-top: 8px
+        }
+
+        .step:hover {
+            background: var(--ink);
+            color: var(--bg)
+        }
+
+        .time {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 28px
+        }
+
+        .time div {
+            border-top: 4px solid var(--red);
+            padding-top: 12px
+        }
+
+        .time b {
+            font-size: 1.7rem;
+            display: block
+        }
+
+        ul {
+            padding-left: 18px
+        }
+
+        li {
+            margin: 6px 0
+        }
+
+        .rules {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            border: 1px solid var(--line)
+        }
+
+        .rule {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            border: 1px solid var(--line);
+            margin: -.5px
+        }
+
+        .rule b {
+            color: var(--red);
+            font-size: 1.1rem
+        }
+
+        .reg {
+            background: var(--ink);
+            color: var(--bg);
+            text-align: center
+        }
+
+        .reg h2 span {
+            color: var(--red)
+        }
+
+        .reg .btn {
+            background: var(--red);
+            border-color: var(--red);
+            color: #fff
+        }
+
+        .reg .btn:hover {
+            background: var(--bg);
+            color: var(--ink)
+        }
+
+        .contacts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .contacts a.tel {
+            font-size: 1.15rem;
+            text-decoration: none;
+            color: var(--red);
+            font-weight: 700
+        }
+
+        footer {
+            padding: 28px 0;
+            color: var(--mut);
+            font-size: .88rem
+        }
+
+        footer a {
+            color: var(--red)
+        }
+
+        @media (max-width:860px) {
+
+            .hero .wrap,
+            .grid2,
+            .steps,
+            .rules,
+            .contacts,
+            .time {
+                grid-template-columns: 1fr
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .stats div:nth-child(3) {
+                border-left: 0
+            }
+
+            .stats div:nth-child(n+3) {
+                border-top: 1px solid var(--line)
+            }
+
+            .burger {
+                display: block
+            }
+
+            .navbtn {
+                display: none
+            }
+
+            .links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--bg);
+                border-bottom: 1px solid var(--line)
+            }
+
+            .links.open {
+                display: flex
+            }
+
+            .links a {
+                border-left: 0;
+                border-top: 1px solid var(--line);
+                padding: 16px 20px
+            }
+
+            section {
+                padding: 56px 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="wrap">
+            <a class="brand" href="#top"><i></i>All-in Put</a>
+            <button class="burger" aria-label="Menu"
+                onclick="document.getElementById('l').classList.toggle('open')">Menu</button>
+            <div class="links" id="l" onclick="this.classList.remove('open')">
+                <a href="#about">About</a><a href="#format">Format</a><a href="#eligibility">Eligibility</a><a
+                    href="#rules">Rules</a><a href="#register">Register</a><a href="#contact">Contact</a>
+            </div>
+            <a class="navbtn" href="https://aaroh.iiitkottayam.ac.in/" target="_blank"
+                style="align-self:center;margin-left:auto;padding:0 16px;text-decoration:none;border-left:1px solid var(--line);height:100%;display:flex;align-items:center;gap:9px;font-weight:700;font-size:.95rem;letter-spacing:.05em">
+                <img src="aaroh_logo.png" alt="AAROH" style="height:26px;width:auto;display:block">
+                AAROH
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero" id="top">
+        <div class="wrap">
+            <div>
+                <img class="logo" src="logo-removebg-preview.png" alt="All-in Put logo">
+                <div class="tag mono">Team-based electronics &amp; innovation event</div>
+                <h1>Bid. Build. <em>Win.</em></h1>
+                <p class="lead">Bid for components with virtual credits. Build a working project with only what you win.
+                </p>
+                <div class="cta"><a class="btn"
+                        href="#register">Register
+                        your team →</a><a class="btn o" href="#format">How it works</a></div>
+            </div>
+            <div class="stage">
+                <div class="lot mono">LOT #01 · SOLD?</div><img class="car" src="car_clean.png" alt="Elix robot car">
+            </div>
+        </div>
+    </header>
+
+    <div class="ticker" aria-hidden="true">
+        <div class="mono">
+            <span><b>●</b> GOING ONCE</span><span>GOING TWICE</span><span><b>SOLD!</b></span><span>SPEND
+                WISELY</span><span>EVERY CREDIT COUNTS</span><span><b>●</b> GOING ONCE</span><span>GOING
+                TWICE</span><span><b>SOLD!</b></span><span>SPEND WISELY</span><span>EVERY CREDIT COUNTS</span>
+            <span><b>●</b> GOING ONCE</span><span>GOING TWICE</span><span><b>SOLD!</b></span><span>SPEND
+                WISELY</span><span>EVERY CREDIT COUNTS</span><span><b>●</b> GOING ONCE</span><span>GOING
+                TWICE</span><span><b>SOLD!</b></span><span>SPEND WISELY</span><span>EVERY CREDIT COUNTS</span>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="stats">
+            <div><b>₹249</b><span>per team</span></div>
+            <div><b>3 – 5</b><span>members per team</span></div>
+            <div><b>~4.5–5 hrs</b><span>total duration</span></div>
+            <div><b>Top 3</b><span>keep what they build</span></div>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="wrap">
+            <div class="tag mono">// 01 Overview</div>
+            <h2>Bid smart. Build clever.</h2>
+            <div class="grid2">
+                <div class="card">
+                    <p>A team-based electronics and innovation event where participants bid for components using virtual
+                        credits and then build their own creative working project using the resources they acquire.</p>
+                    <h3 style="margin-top:20px">Objective</h3>
+                    <p>To encourage participants to think creatively, make strategic engineering decisions and develop a
+                        functional project under limited resources, budget and time constraints.</p>
+                </div>
+                <div class="card win" style="display:flex;align-items:center;justify-content:center;text-align:center;background:var(--red)">
+                    <h3 style="font-family:'Press Start 2P',monospace;font-size:2rem;line-height:1.9;color:#fff;text-shadow:3px 3px 0 rgba(0,0,0,.5)">Top 3 teams get to keep what they build.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="format">
+        <div class="wrap">
+            <div class="tag mono">// 02 Format</div>
+            <h2>Spend wisely. Every credit counts.</h2>
+            <div class="steps">
+                <div class="step"><small class="mono">STEP 01</small>
+                    <p>Each team receives a fixed amount of virtual credits.</p>
+                </div>
+                <div class="step"><small class="mono">STEP 02</small>
+                    <p>Common/basic components are bought using these credits.</p>
+                </div>
+                <div class="step"><small class="mono">STEP 03</small>
+                    <p>Special/limited components are auctioned and can be bought using the credits left after buying
+                        the basic components.</p>
+                </div>
+                <div class="step"><small class="mono">STEP 04</small>
+                    <p>Teams must strategically bid and manage their budget.</p>
+                </div>
+                <div class="step"><small class="mono">STEP 05</small>
+                    <p>After the auction, teams can build any project they want using only the components/resources they
+                        acquired.</p>
+                </div>
+                <div class="step"><small class="mono">STEP 06</small>
+                    <p>Teams design, assemble, program and demonstrate their project.</p>
+                </div>
+                <div class="step" style="grid-column:1/-1"><small class="mono">STEP 07</small>
+                    <p>Projects are evaluated on functionality, creativity, technical implementation and efficient use
+                        of resources.</p>
+                </div>
+            </div>
+            <div class="tag mono" style="margin-top:56px">// schedule</div>
+            <h2 style="margin-bottom:0">Timeline</h2>
+            <div class="time">
+                <div><b>1.5 – 2 hrs</b>Auction</div>
+                <div><b>2.5 hrs</b>Build &amp; Design</div>
+                <div><b>30 min</b>Final Demonstration &amp; Evaluation</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="eligibility">
+        <div class="wrap">
+            <div class="tag mono">// 03 Eligibility</div>
+            <h2>Who can join</h2>
+            <div class="grid2">
+                <div class="card">
+                    <h3>Who can join</h3>
+                    <ul>
+                        <li>Undergraduate students from any branch/specialization</li>
+                        <li>Inter-college teams allowed</li>
+                        <li>Inter-specialization teams allowed</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Team rules</h3>
+                    <ul>
+                        <li>Team size: 3 – 5 members</li>
+                        <li>A participant can be part of only one team</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules">
+        <div class="wrap">
+            <div class="tag mono">// 04 Rules</div>
+            <h2>Play fair, build smart.</h2>
+            <div class="rules">
+                <div class="rule"><b class="mono">01</b>Each team will receive the same initial amount of virtual
+                    credits.</div>
+                <div class="rule"><b class="mono">02</b>Teams must use only the components/resources they have acquired
+                    through the permitted event mechanisms.</div>
+                <div class="rule"><b class="mono">03</b>Teams may not secretly obtain components from other teams or
+                    external sources.</div>
+                <div class="rule"><b class="mono">04</b>Any resource trade must be approved by the event coordinators.
+                </div>
+                <div class="rule"><b class="mono">05</b>Components cannot be exchanged after the trading period closes.
+                </div>
+                <div class="rule"><b class="mono">06</b>Teams must not interfere with another team's circuit, code,
+                    components, or workspace.</div>
+                <div class="rule"><b class="mono">07</b>Any attempt to gain an unfair advantage through unauthorized
+                    hardware, software, communication, or external assistance may result in disqualification.</div>
+                <div class="rule"><b class="mono">08</b>Only low-voltage components supplied/approved by the organizers
+                    may be used.</div>
+                <div class="rule"><b class="mono">09</b>Teams are responsible for handling the components assigned to
+                    them.</div>
+                <div class="rule"><b class="mono">10</b>The organizers' decision regarding rule violations and scoring
+                    will be final.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="register" class="reg">
+        <div class="wrap">
+            <div class="tag mono">// 05 Register</div>
+            <h2><span>₹249</span> per team</h2>
+            <p style="max-width:520px;margin:0 auto 36px;color:var(--mut)">Registration fee per team. Choose your
+                registration path below.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:680px;margin:0 auto;text-align:left">
+                <div class="card" style="border-color:rgba(255,255,255,.15);border-left:3px solid var(--red)">
+                    <div class="tag mono" style="margin-bottom:10px">External</div>
+                    <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--ink)">Other Colleges</h3>
+                    <p style="font-size:.88rem;margin-bottom:20px">Register &amp; pay via Unstop. Open to all
+                        undergraduate students.</p>
+                    <a class="btn" style="width:100%;justify-content:center"
+                        href="https://unstop.com/p/all-in-put-indian-institute-of-information-technology-iiit-kottayam-1763553"
+                        target="_blank">Register on Unstop →</a>
+                </div>
+                <div class="card" style="border-color:rgba(255,255,255,.15);border-left:3px solid var(--red)">
+                    <div class="tag mono" style="margin-bottom:10px">Internal</div>
+                    <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--ink)">IIIT Kottayam Students</h3>
+                    <p style="font-size:.88rem;margin-bottom:20px">Register via the internal Google Form for IIIT
+                        Kottayam participants.</p>
+                    <a class="btn" style="width:100%;justify-content:center;background:var(--red);border-color:var(--red)"
+                        href="https://forms.gle/gsEMPB5UgT1YH9mM9"
+                        target="_blank">Register via Form →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="wrap">
+            <div class="tag mono">// 06 Points of Contact</div>
+            <h2>Questions? Reach out.</h2>
+            <p style="margin:-12px 0 24px;color:var(--mut)">Questions about registration, teams or the event? Reach out
+                to us.</p>
+            <div class="contacts">
+                <div class="card">
+                    <h3>Nandana S</h3><a class="tel" href="tel:+919048969850">90489 69850</a>
+                </div>
+                <div class="card">
+                    <h3>Ann Mary</h3><a class="tel" href="tel:+918137022109">81370 22109</a>
+                </div>
+                <div class="card">
+                    <h3>Zayed</h3><a class="tel" href="tel:+918089760100">80897 60100</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">All-in Put · Part of the tech fest · <a href="https://aaroh.iiitkottayam.ac.in/">AAROH, IIIT
+                Kottayam</a></div>
+    </footer>
+</body>
+
+</html>
